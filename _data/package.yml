@@ -1,33 +1,35 @@
 name: ACE
-version: 5.1
-date: 22/01/2012
+version: 5.2
+date: 11/03/2016
 description: Advanced Coset Enumerator
 
 authors:
     - name: Greg Gamble
-      url: http://school.maths.uwa.edu.au/~gregg
+      url: http://staffhome.ecm.uwa.edu.au/~00021149
     - name: Alexander Hulpke
       url: http://www.math.colostate.edu/~hulpke
     - name: George Havas
-      url: http://www.itee.uq.edu.au/~havas
+      url: http://staff.itee.uq.edu.au/havas
     - name: Colin Ramsay
-      url: http://www.itee.uq.edu.au/~cram
+      url: mailto:cram@itee.uq.edu.au
 
 maintainers:
     - name: Greg Gamble
-      url: http://school.maths.uwa.edu.au/~gregg
+      url: http://staffhome.ecm.uwa.edu.au/~00021149
+    - name: Max Horn
+      url: http://www.quendi.de/math
 
-GAP: ">= 4.4"
+GAP: ">= 4.7"
 
-www: http://school.maths.uwa.edu.au/~gregg/ACE/
-readme: http://school.maths.uwa.edu.au/~gregg/ACE/README
-packageinfo: http://school.maths.uwa.edu.au/~gregg/ACE/PackageInfo.g
+www: https://gap-packages.github.io/ace
+readme: https://gap-packages.github.io/ace/README
+packageinfo: https://gap-packages.github.io/ace/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: http://school.maths.uwa.edu.au/~gregg/ACE/ace-5.1.tar.gz
+      url: https://github.com/gap-packages/ace/releases/download/v5.2/ace-5.2.tar.gz
 
-abstract: The <span class="pkgname">ACE</span> package provides both an      interactive and non-interactive interface with the Todd-Coxeter coset     enumeration functions of the ACE (Advanced Coset Enumerator) C program.
+abstract: The <span class="pkgname">ACE</span> package provides both an    interactive and non-interactive interface with the Todd-Coxeter coset   enumeration functions of the ACE (Advanced Coset Enumerator) C program.
 
 status: accepted
 doc-html: htm/chapters.htm
