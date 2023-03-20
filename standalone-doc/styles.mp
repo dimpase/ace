@@ -6,6 +6,7 @@
 % u is our `unit of measure'.  The default value is the normal PostScript
 % "big point" of 1/72 inch.  vs is the vertical spacing, and hs is the
 % the horizontal spacing between the three (major) columns & their items.
+outputtemplate := "%j.%c.eps"; % to produce *.eps suffixed files
 numeric u,vs,hs;  
 u = 1bp;  vs = 72u;  hs = 108u;
 
