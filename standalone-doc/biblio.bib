@@ -1,21 +1,8 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%W  biblio.bib         ACE standalone documentation          Colin Ramsay
-%W                                                            Greg Gamble
-%%
-%H  $Id$
-%%
 
-%%  Colin Ramsay - 20 Sep 1999  is the true author of this document
-%%  Greg Gamble  - 28-29 Feb 2000 made minor modifications:
-%%                * added books by - Coxeter & Moser
-%%                                 - Magnus, Karrass & Solitar
-%%                * put this header at the top of the .tex files for CVS
-
-%% biblio.bib - BibTeX database file of ACE references
-%%
-%%  5   10   15   20   25   30   35   40   45   50   55   60   65   70   75
-%%..|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
+% biblio.bib - 2 Feb 01, 9 Jun 14 - Colin Ramsay
+%
+%   5   10   15   20   25   30   35   40   45   50   55   60   65   70   75   80
+% ..|....|....|....|....|....|....|....|....|....|....|....|....|....|....|....|
 
 @ARTICLE{CDHW,
   AUTHOR        = {John J. Cannon and Lucien A. Dimino and George Havas
@@ -25,10 +12,10 @@
   JOURNAL       = {Mathematics of Computation},
   YEAR          = {1973},
   VOLUME        = {27},
-  NUMBER        = {123},
-  PAGES         = {463--490},
-  MONTH         = {July}
+  PAGES         = {463--490}
 }
+%  NUMBER        = {123},
+%  MONTH         = {July},
 
 @ARTICLE{Dok,
   AUTHOR        = {Dragomir Z. Dokovic},
@@ -127,25 +114,17 @@
 
 @BOOK{Pla,
   AUTHOR        = {P.J. Plauger},
-  TITLE         = {The Standard {C} Library},
+  TITLE         = {The Standard C Library},
   PUBLISHER     = {Prentice Hall},
   YEAR          = {1992}
 }
 
-@BOOK{MKS,
-  AUTHOR        = {Wilhelm Magnus and Abraham Karrass and Daniel Solitar},
-  TITLE         = {Combinatorial Group Theory},
-  PUBLISHER     = {Dover},
-  EDITION       = {2nd},
-  YEAR          = {1976}
-}
-
-@BOOK{CM,
+@BOOK{CoxMos,
   AUTHOR        = {H.S.M. Coxeter and W.O.J. Moser},
   TITLE         = {Generators and Relations for Discrete Groups},
   PUBLISHER     = {Springer-Verlag},
-  EDITION       = {3rd},
-  YEAR          = {1972}
+  YEAR          = {1980},
+  EDITION	= {Fourth}
 }
 
 @MISC{C11,
@@ -208,7 +187,7 @@
 
 @MISC{Fel,
   AUTHOR	= {V. Felsch},
-  NOTE		= {E-mail to Havas, 1998}
+  NOTE		= {E-mail to G. Havas, 1998}
 }
 
 @ARTICLE{Moo,
@@ -290,20 +269,27 @@
   YEAR          = {1901}
 }
 
-@TECHREPORT{HR1,
+@INCOLLECTION{HR1,
   AUTHOR        = {George Havas and Colin Ramsay},
   TITLE         = {Experiments in coset enumeration},
-  INSTITUTION   = {Centre for Discrete Mathematics and Computing},
-  YEAR          = {1999},
-  NUMBER        = {13},
-  ADDRESS       = {The University of Queensland}
+  BOOKTITLE     = {Groups and Computation {I{\kern-1pt}I{\kern-1pt}I}},
+  PUBLISHER     = {Walter de Gruyter},
+  YEAR          = {2001},
+  EDITOR        = {W.M.\@ Kantor and A.\@ Seress},
+  NUMBER        = {8},
+  SERIES        =  {Ohio State University Mathematical Research Institute 
+			Publications},
+  PAGES         = {183--192}
 }
 
 @ARTICLE{HR2,
   AUTHOR        = {George Havas and Colin Ramsay},
-  TITLE         = {The trivial group made easy},
+  TITLE         = {Proving a group trivial made easy: a case study in coset
+			enumeration},
   JOURNAL       = {Bulletin of the Australian Mathematical Society},
-  YEAR          = {to appear}
+  YEAR          = {2000},
+  VOLUME        = {62},
+  PAGES         = {105--118}
 }
 
 @ARTICLE{Hig,
@@ -366,6 +352,131 @@
   PAGES         = {21--35},
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-%E
+@INCOLLECTION{Hav3,
+  AUTHOR        = {George Havas},
+  TITLE         = {A {Reidemeister-Schreier} Program},
+  BOOKTITLE     = {Proceedings of the Second International Conference on
+                     The Theory of Groups (ANU, 1973)},
+  PUBLISHER     = {Springer-{\kern-1.5pt}Verlag},
+  YEAR          = {1974},
+  EDITOR        = {M.F. Newman},
+  NUMBER        = {372},
+  SERIES        = {Lecture Notes in Mathematics},
+  PAGES         = {347--356}
+}
+
+@article {CHRR1,
+    AUTHOR = {Campbell, Colin M. and Havas, George and Ramsay, Colin and
+              Robertson, Edmund F.},
+     TITLE = {Nice efficient presentations for all small simple groups and
+              their covers},
+   JOURNAL = {LMS Journal of Computation and Mathematics},
+    VOLUME = {7},
+      YEAR = {2004},
+     PAGES = {266--283 (electronic)},
+      ISSN = {1461-1570}
+}
+
+@article {CHRR2,
+    AUTHOR = {Campbell, Colin M. and Havas, George and Ramsay, Colin and
+              Robertson, Edmund F.},
+     TITLE = {On the efficiency of the simple groups of order less than a
+              million and their covers},
+   JOURNAL = {Experimental Mathematics},
+    VOLUME = {16},
+      YEAR = {2007},
+    NUMBER = {3},
+     PAGES = {347--358}
+}
+
+@incollection {HR3,
+    AUTHOR = {Havas, George and Ramsay, Colin},
+     TITLE = {Parallel coset enumeration using threads},
+ BOOKTITLE = {Computer mathematics ({C}hiang {M}ai, 2000)},
+    SERIES = {Lecture Notes Series on Computing},
+    VOLUME = {8},
+     PAGES = {29--38},
+ PUBLISHER = {World Scientific Publishing Company},
+      YEAR = {2000}
+}
+
+@incollection {HR4,
+    AUTHOR = {Havas, George and Ramsay, Colin},
+     TITLE = {Short balanced presentations of perfect groups},
+ BOOKTITLE = {Groups {S}t.\ {A}ndrews 2001 in {O}xford, {V}ol.\ {I}},
+    SERIES = {LMS Lecture Note Series},
+    VOLUME = {304},
+     PAGES = {238--243},
+ PUBLISHER = {Cambridge University Press},
+      YEAR = {2003}
+}
+
+@INCOLLECTION{HSW,
+  AUTHOR        = {George Havas and Leonard H. Soicher and Robert A. Wilson},
+  TITLE         = {A presentation for the {T}hompson sporadic simple group},
+  BOOKTITLE     = {Groups and Computation {I{\kern-1pt}I{\kern-1pt}I}},
+  PUBLISHER     = {Walter de Gruyter},
+  YEAR          = {2001},
+  EDITOR        = {W.M.\@ Kantor and A.\@ Seress},
+  NUMBER        = {8},
+  SERIES        =  {Ohio State University Mathematical Research Institute 
+			Publications},
+  PAGES         = {193--199}
+}
+
+@INCOLLECTION{New,
+  AUTHOR        = {M.F. Newman},
+  TITLE         = {Groups of {E}xponent 6},
+  BOOKTITLE     = {Computational Group Theory},
+  PUBLISHER     = {Academic Press},
+  YEAR          = {1984},
+  EDITOR        = {Michael D. Atkinson},
+  PAGES         = {39--41}
+}
+
+@incollection {HR5,
+    AUTHOR = {Havas, George and Ramsay, Colin},
+     TITLE = {On proofs in finitely presented groups},
+ BOOKTITLE = {Groups {S}t. {A}ndrews 2005, {V}ol.\ 2},
+    SERIES = {LMS Lecture Note Series},
+    VOLUME = {340},
+     PAGES = {457--474},
+ PUBLISHER = {Cambridge University Press},
+      YEAR = {2007}
+}
+
+@MASTERSTHESIS{Litt,
+  AUTHOR	= {Tom Litt},
+  TITLE		= {{Coset Enumeration}},
+  SCHOOL	= {Christ Church},
+  YEAR		= {1999}
+}
+
+@MANUAL{gcc,
+  TITLE		= {Using the GNU Compiler Collection (For GCC version 4.8.2)},
+  AUTHOR       	= {Richard M. Stallman and the GCC Developer Community},
+  ADDRESS      	= {{GNU Press}, \url{www.gnupress.org}}
+}
+
+@TECHREPORT{c99,
+  AUTHOR	= {WG14},
+  TITLE		= {Programming Language C, ISO/IEC 9899:1999},
+  INSTITUTION	= {ISO/IEC},
+  YEAR		= {2007},
+  ADDRESS     	= {\url{http://www.open-std.org/jtc1/sc22/wg14/www/standards}}
+}
+
+@MANUAL{GAP,
+  TITLE         = {{ACE} -- A \textsf{GAP4} Package, Version 5.1},
+  AUTHOR        = {George Havas and Colin Ramsay and Alexander Hulpke 
+                                                               and Greg Gamble},
+  YEAR          = {January 2012}
+}
+
+@MANUAL{GAP2,
+  TITLE         = {\textsf{GAP} -- Groups, Algorithms and Programming,
+                    Version 4.5.5},
+  AUTHOR        = {The \textsf{GAP} Group},
+  YEAR          = {2012 (\url{http://www.gap-system.org})}
+}
+
