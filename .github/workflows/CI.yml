@@ -70,3 +70,9 @@ jobs:
           name: manual
           path: ./doc/manual.pdf
           if-no-files-found: error
+      - name: 'Upload ACE binary documentation'
+        uses: actions/upload-artifact@v3
+        with:
+          name: ace41 
+          path: ./doc/ace41.pdf
+          if-no-files-found: error
