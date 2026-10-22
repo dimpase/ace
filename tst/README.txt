@@ -1,13 +1,12 @@
 Run the tests after configuring and compiling ACE:
 
-  python3 tst/timeout.py 180 gap --quitonbreak tst/testall.g
+  gap --quitonbreak tst/testall.g
 
 Ensure GAP loads this checkout (use a private GAP root with pkg/ace linked
-to it, and gap -l '/path/to/private-root;'). CI uses the same external
-deadline through run-pkg-tests' pre-gap input, in both package-load modes.
-The timeout wrapper terminates descendants and the process group, including
-the ACE child (which GAP places in a separate process group).
-Do not substitute the old engine's time option for this deadline.
+to it, and gap -l '/path/to/private-root;'). The existing tst/testall.g runs
+the .tst files through GAP's TestDirectory. CI uses gap-actions/run-pkg-tests
+directly in both package-load modes, with GitHub's three-minute step timeout
+and the runner's process cleanup. No separate test runner is required.
 
 Example inventory
 -----------------
