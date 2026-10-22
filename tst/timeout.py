@@ -30,7 +30,12 @@ def main():
         return process.wait(timeout=seconds)
     except subprocess.TimeoutExpired:
         print(f"TIMEOUT after {seconds:g}s: {sys.argv[2:]}", file=sys.stderr)
-        for child in descendants(process.pid):
+        try:
+            children = descendants(process.pid)
+        except (OSError, subprocess.SubprocessError) as error:
+            print(f"Cannot inspect descendants: {error}", file=sys.stderr)
+            children = []
+        for child in children:
             try:
                 os.kill(child, signal.SIGKILL)
             except ProcessLookupError:
