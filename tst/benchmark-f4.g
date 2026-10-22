@@ -14,7 +14,7 @@ Print("GAP=", GAPInfo.Version, "; package=", ACEPackageVersion(), "\n",
       "Package path=", DirectoriesPackageLibrary("ace", ""), "\n",
       "Binary path=", ACEData.binary, "; banner version=", ACEData.version, "\n",
       "Strategy=default; workspace=128000000 entries; external timeout required\n");
-SetInfoLevel(InfoACE, 2);
+SetInfoLevel(InfoACE, 3); # retain progress counters if the external deadline wins
 result := ACEStats(D.fgens, D.rels, D.sgens
                    : workspace := 128000000, messages := 1000000);;
 Print("Final statistics: ", result, "\n");
