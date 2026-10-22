@@ -5,7 +5,8 @@ Run the tests after configuring and compiling ACE:
 Ensure GAP loads this checkout (use a private GAP root with pkg/ace linked
 to it, and gap -l '/path/to/private-root;'). CI uses the same external
 deadline through run-pkg-tests' pre-gap input, in both package-load modes.
-The timeout wrapper terminates the process group, including the ACE child.
+The timeout wrapper terminates descendants and the process group, including
+the ACE child (which GAP places in a separate process group).
 Do not substitute the old engine's time option for this deadline.
 
 Example inventory
