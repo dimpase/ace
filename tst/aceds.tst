@@ -15,10 +15,12 @@ gap> ACEStats(i).index;
 640
 gap> lev := InfoLevel(InfoACE);; diagnostic := "";;
 gap> output := OutputTextString(diagnostic, true);;
-gap> oldOutput := InfoOutput(InfoACE);;
-gap> SetInfoOutput(InfoACE, output);; SetInfoLevel(InfoACE, 3);;
+gap> oldOutput := InfoOutput(InfoACE);; oldWarningOutput := InfoOutput(InfoWarning);;
+gap> SetInfoOutput(InfoACE, output);; SetInfoOutput(InfoWarning, output);;
+gap> SetInfoLevel(InfoACE, 3);;
 gap> remaining := ACEDeleteSubgroupGenerators(i, [2]);;
-gap> SetInfoLevel(InfoACE, lev);; SetInfoOutput(InfoACE, oldOutput);; CloseStream(output);;
+gap> SetInfoLevel(InfoACE, lev);; SetInfoOutput(InfoACE, oldOutput);;
+gap> SetInfoOutput(InfoWarning, oldWarningOutput);; CloseStream(output);;
 gap> PositionSublist(diagnostic, "ERROR") <> fail and
 >    PositionSublist(diagnostic, "first argument out of range") <> fail;
 true
