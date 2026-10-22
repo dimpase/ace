@@ -1,13 +1,3 @@
-Run the tests after configuring and compiling ACE:
-
-  gap --quitonbreak tst/testall.g
-
-Ensure GAP loads this checkout (use a private GAP root with pkg/ace linked
-to it, and gap -l '/path/to/private-root;'). The existing tst/testall.g runs
-the .tst files through GAP's TestDirectory. CI uses gap-actions/run-pkg-tests
-directly in both package-load modes, with GitHub's three-minute step timeout
-and the runner's process cleanup. No separate test runner is required.
-
 Example inventory
 -----------------
 Ordinary: A5 (60), A5-C5 (12), C5-fel0 (5), F27-purec/F27-fel0/F27-fel1
