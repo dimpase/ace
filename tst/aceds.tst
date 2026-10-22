@@ -1,3 +1,12 @@
+#############################################################################
+##
+#A  aceds.tst                 ACE package                         Greg Gamble
+#A                                                             Volkmar Felsch
+##
+##  A nice example provided by Volkmar Felsch that tests the stability of the
+##  ACE interface when bad input is fed to the ACE binary.
+##
+
 # Regression for the subgroup-deletion hang reported in PR #36.
 # Capture the diagnostic, assert its meaning, then test a valid query.
 gap> START_TEST("aceds.tst");
