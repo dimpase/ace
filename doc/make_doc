@@ -2,25 +2,21 @@
 set -e
 
 echo "TeXing documentation"
-# delete old stuff to avoid spurious or "hidden errors" caused by their presence
-rm -f manual.{aux,bbl,blg,dvi,idx,ilg,ind,lab,log,pdf,ps,six,toc}
+# Remove old outputs so a failed build cannot leave a stale manual.
+for ext in aux bbl blg dvi idx ilg ind lab log pdf ps six toc; do
+    rm -f "manual.$ext"
+done
 
-# TeX the manual
-tex manual
-# ... and build its bibliography
+xetex -interaction=nonstopmode -halt-on-error manual
 bibtex manual
-# TeX the manual again to incorporate the ToC
-tex manual
-# ... and build the index
+xetex -interaction=nonstopmode -halt-on-error manual
 ../../../doc/manualindex manual
-# Finally TeX the manual again to get cross-references right
-tex manual
+xetex -interaction=nonstopmode -halt-on-error manual
+xetex -interaction=nonstopmode -halt-on-error manual
 
-# Create PDF version
-pdftex manual
-pdftex manual
-
-# The HTML version of the manual
 mkdir -p ../htm
 echo "Creating HTML documentation"
 ../../../etc/convert.pl -i -u -c -n ACE . ../htm
+
+make -C ../standalone-doc
+cp ../standalone-doc/ace41.pdf .
