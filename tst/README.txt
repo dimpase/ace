@@ -33,11 +33,14 @@ counters and commands. standalone.tst instead generates real standalone
 input from the same A5, A5-C5, F27-purec and SL219-hard fixtures and checks
 successful indices and absence of engine errors.
 
-aceds.tst retains the original PerfectGroup subgroup-deletion reproducer.
-It asserts the invalid-deletion diagnostic and unchanged subgroup, then
-checks valid statistics, tables and adding the deleted generator again.
-Only diagnostic capture and example chatter are redirected; errors and
-mathematical checks are not discarded.
+aceds.tst preserves the original PerfectGroup subgroup-deletion reproducer,
+including its call sequence, statistics checks and diagnostic transcript.
+Its only change is an explicit 1M-entry workspace cap.
+subgroup-recovery.tst adds separate checks of the invalid-deletion diagnostic,
+unchanged subgroup, statistics fields, complete tables and adding the deleted
+generator again. It sends no ACE query between the valid and invalid deletions.
+Only the additional test's diagnostic capture and example chatter are
+redirected; errors and mathematical checks are not discarded.
 
 Workspace counts are entries, not bytes. Ordinary runs request at most
 2 million entries (about 8 MB for the default 32-bit entry model), plus
