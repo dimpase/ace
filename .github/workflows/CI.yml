@@ -36,9 +36,12 @@ jobs:
           gap-version: ${{ matrix.gap-version }}
       - uses: gap-actions/build-pkg@v3
       - uses: gap-actions/run-pkg-tests@v4
+        with:
+          pre-gap: python3 tst/timeout.py 180
       - uses: gap-actions/run-pkg-tests@v4
         with:
           mode: onlyneeded
+          pre-gap: python3 tst/timeout.py 180
       - uses: gap-actions/process-coverage@v3
       - name: Process C coverage
         working-directory: src
