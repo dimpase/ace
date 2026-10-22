@@ -3,7 +3,7 @@ SetPackageInfo( rec(
 PackageName := "ACE",
 Subtitle    := "Advanced Coset Enumerator",
 
-Version     := "5.7.0",
+Version     := "5.8.0dev",
 Date        := "10/04/2025", # dd/mm/yyyy format
 License     := "MIT",
 
@@ -93,23 +93,8 @@ Persons := [
                        "Germany" ),
     Place         := "Kaiserslautern, Germany",
     Institution   := "RPTU Kaiserslautern-Landau"
-  ),
-  rec(
-    LastName      := "Pasechnik",
-    FirstNames    := "Dmitrii",
-    IsAuthor      := false,
-    IsMaintainer  := true,
-    Email         := "dima@pasechnik.info",
-    WWWHome       := "https://www.pasechnik.info",
-    PostalAddress := Concatenation(
-                       "Department of Computer Science\n",
-                       "University of Oxford\n",
-                       "Wolfson Building, Parks Road\n",
-                       "Oxford OX1 3QD\n",
-                       "UK" ),
-    Place         := "Oxford, UK",
-    Institution   := "University of Oxford"
   )
+
 ],
 
 Status      := "accepted",
