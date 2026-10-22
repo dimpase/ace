@@ -76,11 +76,11 @@ jobs:
           HPCGAP: ${{ matrix.HPCGAP }}
       - uses: gap-actions/build-pkg@v3
       - uses: gap-actions/run-pkg-tests@v4
+        timeout-minutes: 3
         with:
           coverage: 'false'
-          pre-gap: python3 tst/timeout.py 180
       - uses: gap-actions/run-pkg-tests@v4
+        timeout-minutes: 3
         with:
           coverage: 'false'
           mode: onlyneeded
-          pre-gap: python3 tst/timeout.py 180

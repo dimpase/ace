@@ -34,10 +34,11 @@ Makefile: configure Makefile.in $(GAPPATH)/sysinfo.gap
 
 # The research presentation is external and never part of ordinary CI.
 GAP ?= gap
+TIMEOUT ?= timeout
 F4_INPUT ?=
 F4_SECONDS ?= 30
 benchmark-f4:
 	test -n "$(F4_INPUT)"
-	ACE_F4_INPUT="$(F4_INPUT)" python3 tst/timeout.py $(F4_SECONDS) $(GAP) --quitonbreak tst/benchmark-f4.g
+	ACE_F4_INPUT="$(F4_INPUT)" $(TIMEOUT) --kill-after=5s $(F4_SECONDS)s $(GAP) --quitonbreak tst/benchmark-f4.g
 
 .PHONY: benchmark-f4

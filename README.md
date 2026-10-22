@@ -101,7 +101,7 @@ above; the import and later build/interface changes are separate commits.
 The local `make.linux` changes select the default memory model and honour
 compiler and linker flags. GAP's ABI and ACE's entry width are independent.
 See `CHANGES.md` for intentional compatibility changes and `tst/README.txt`
-for the regression tests and external timeout runner.
+for the GAP regression tests and CI timeouts.
 
 If you encounter problems with the ACE binary, please contact one of  the
 C code authors:  George  Havas  <georgehavas@gmail.com>  or  Colin  Ramsay

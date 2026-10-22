@@ -35,3 +35,11 @@ redirected; errors and mathematical checks are not discarded.
 Workspace counts are entries, not bytes. Ordinary runs request at most
 2 million entries (about 8 MB for the default 32-bit entry model), plus
 GAP and engine overhead. The GAP ABI is independent of ACE's entry model.
+
+The optional research run is separate from TestDirectory and ordinary CI:
+
+  make benchmark-f4 F4_INPUT=/path/to/f4_leaf.g
+
+It uses GNU timeout with a default 30-second deadline and a five-second kill
+grace period. Override F4_SECONDS to change the deadline, GAP to select the
+GAP executable, or TIMEOUT=gtimeout where GNU timeout has that name.
