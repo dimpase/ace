@@ -1,4 +1,7 @@
-# ACE 4.1 manual by Colin Ramsay; XeTeX/MetaPost build integration.
+
+# Makefile for ACE 4.1xx doco, Colin Ramsay, 24 Sep 03, 25 Apr 14
+# adapted by Dima Pasechnik to use xelatex 20 Mar 23
+
 textargets := $(wildcard *.tex)
 
 all: guide
