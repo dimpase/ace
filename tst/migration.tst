@@ -84,4 +84,27 @@ true
 gap> ACEStats(i).index;
 60
 gap> ACEQuit(i);
+gap> fixture := ACE_TestExample("perf602p5");;
+gap> i := ACEStart(fixture.fgens, fixture.rels, fixture.sgens : workspace := "1M");;
+gap> captured := "";; output := OutputTextString(captured, true);;
+gap> SetInfoOutput(InfoACE, output);; SetInfoOutput(InfoWarning, output);;
+gap> stats := ACEStats(i : print);;
+gap> cached := ACEDataRecord(i).cosettable;;
+gap> SetInfoOutput(InfoACE, oldOutput);; SetInfoOutput(InfoWarning, oldWarningOutput);;
+gap> CloseStream(output);;
+gap> ACE_TestTable(cached, fixture.fgens, fixture.rels, fixture.sgens, 480);
+true
+gap> ACEStats(i).index = Length(cached[1]);
+true
+gap> ACEQuit(i);
+gap> fixture := ACE_TestExample("A5");;
+gap> i := ACEStart(fixture.fgens, fixture.rels, [] : workspace := "1M", max := 5);;
+gap> stats := ACEStats(i : print, incomplete);;
+gap> cached := ACEDataRecord(i).cosettable;;
+gap> stats.index = 0 and ForAny(cached, col -> 0 in col);
+true
+gap> ACEContinue(i : max := 1000);;
+gap> ACE_TestTable(ACECosetTable(i), fixture.fgens, fixture.rels, [], 60);
+true
+gap> ACEQuit(i);
 gap> STOP_TEST("migration.tst", 1000000);

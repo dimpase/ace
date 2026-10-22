@@ -1040,6 +1040,14 @@ local ToACE, IsValidOptionValue, CheckValidOption, ProcessOption,
         # The ACE optname is the same as the GAP optname
         opt.ace := opt.name;
       fi;
+      # A cached GAP table needs contiguous, standardised row numbers.
+      # ACE 4.1 print no longer compacts; do this before requesting rows.
+      if opt.fullname = "print" and IsBound(datarec.procId) and
+         IsBound(datarec.stats) and val in ["", datarec.stats.activecosets] and
+         (datarec.stats.index <> 0 or
+          VALUE_ACE_OPTION(optnames, false, "incomplete")) then
+        ToACE([ "Standard;" ]);
+      fi;
       if opt.list then
         ToACE([ opt.ace,":", 
                 JoinStringsWithSeparator( List(val, String) ), ";" ]);
