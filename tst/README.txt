@@ -24,7 +24,8 @@ successful indices and absence of engine errors.
 
 aceds.tst preserves the original PerfectGroup subgroup-deletion reproducer,
 including its call sequence, statistics checks and diagnostic transcript.
-Its only change is an explicit 1M-entry workspace cap.
+Its changes are an explicit 1M-entry workspace cap and the two run-parameter
+heading/footer lines changed by ACE 4.1.
 subgroup-recovery.tst adds separate checks of the invalid-deletion diagnostic,
 unchanged subgroup, statistics fields, complete tables and adding the deleted
 generator again. It sends no ACE query between the valid and invalid deletions.
