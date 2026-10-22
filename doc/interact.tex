@@ -837,22 +837,11 @@ the   last   enumeration    failed    to    complete.    The    record
 \>ACEDisplayCosetTable( [<val>] ) F
 \>ACEDisplayCosetTable( <i>, [<val>, <last>] ) F
 \>ACEDisplayCosetTable( [<val>, <last>] ) F
-\>ACEDisplayCosetTable( <i>, [<val>, <last>, <by>] ) F
-\>ACEDisplayCosetTable( [<val>, <last>, <by>] ) F
 
-compact and display the (possibly incomplete) coset table of the <i>th
-(or default) process started by `ACEStart'; <val> must be an  integer,
-and <last> and <by> must be positive integers. In the first two  forms
-of the command, the entire coset table is displayed, without orders or
-coset representatives. In the third and  fourth  forms,  the  absolute
-value of <val> is taken to be  the  last  line  of  the  table  to  be
-displayed (and 1 is taken to be the first); in  the  fifth  and  sixth
-forms, `|<val>|' is taken to be the first line  of  the  table  to  be
-displayed, and <last> is taken to be the number of the last line to be
-displayed. In the last two forms, the table  is  displayed  from  line
-`|<val>|' to line <last> in steps of <by>. If <val> is negative,  then
-the  orders   modulo   the   subgroup   (if   available)   and   coset
-representatives are displayed also.
+Display the current (possibly incomplete) table. The integer arguments and
+their signs follow option `print' (see~"option print"). Display does not
+compact or renumber the table. Use `ACERecover' or
+`ACEStandardCosetNumbering' explicitly when required.
 
 *Note:*
 The coset table displayed will normally only be `lenlex'  standardised
@@ -1497,3 +1486,19 @@ wait indefinitely.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %E
+
+\Section{Compatibility with earlier ACE binaries}
+
+\beginitems
+\>ACEBinaryVersion() F
+\>ACEBinaryVersion( <i> ) F
+Return the engine version parsed from the banner at package loading time.
+This query leaves any active enumeration unchanged. The GAP package version
+is available separately from `ACEPackageVersion'.
+
+\>ACEDumpVariables( <i> ) F
+\>ACEDumpStatistics( <i> ) F
+The corresponding C commands were removed in ACE 4.1. These functions now
+raise explicit errors. Use `ACEParameters' and `ACEStats' respectively for
+supported GAP records; they do not reproduce the old internal dumps.
+\enditems

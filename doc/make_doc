@@ -10,13 +10,13 @@ done
 xetex -interaction=nonstopmode -halt-on-error manual
 bibtex manual
 xetex -interaction=nonstopmode -halt-on-error manual
-../../../doc/manualindex manual
+sh ../../../doc/manualindex manual
 xetex -interaction=nonstopmode -halt-on-error manual
 xetex -interaction=nonstopmode -halt-on-error manual
 
 mkdir -p ../htm
 echo "Creating HTML documentation"
-../../../etc/convert.pl -i -u -c -n ACE . ../htm
+perl ../../../etc/convert.pl -i -u -c -n ACE . ../htm
 
 make -C ../standalone-doc
 cp ../standalone-doc/ace41.pdf .

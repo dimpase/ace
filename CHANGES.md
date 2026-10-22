@@ -4,6 +4,26 @@ development.
 
 ## Unreleased
 
+  * Import the ACE authors' 4.1 engine (banner 4.100), with regression tests
+    first established on upstream ACE 3.001. The GAP package is 5.8.0dev.
+  * Correct startup, run-parameter and compilation-detail parsing; handle
+    ACE 4.1 table printing without relying on implicit compaction. Keep
+    standalone input generation on the GAP side.
+  * Expose Boolean `pdefinitions` (`pd`) in place of the removed `pmode`.
+    Examples using `pmod := 2` now enable preferred definitions explicitly;
+    this is a strategy choice, not an exact emulation of the old modes.
+  * Reject removed `time`, `ai`, `ao`, `aceoutfile`, `hole`, `pmode`, `dump`,
+    `statistics`/`stats` and legacy `parameters`/`restart` options explicitly,
+    including their old abbreviations. Use external process timeouts and
+    shell redirection for standalone I/O. `ACEStats` remains supported.
+  * Keep `ACEBinaryVersion` as a GAP-side banner query. `ACEDumpVariables`
+    and `ACEDumpStatistics` give explicit errors pointing to `ACEParameters`
+    and `ACEStats`; those records do not reproduce internal C dumps.
+  * `print`/`ACEDisplayCosetTable` take at most two integers. Negative first
+    and second values request representatives and dead cosets respectively.
+    Display no longer compacts implicitly; use `ACERecover` explicitly.
+  * Build both manuals with XeTeX and MetaPost through current GAP actions.
+
   * Fix various issues which prevented ACE from working with a native
     Windows (MinGW) build of GAP
 

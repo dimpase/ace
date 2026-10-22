@@ -29,6 +29,10 @@ jobs:
       - uses: gap-actions/setup-gap@v3
         with:
           gap-version: 'devel'
+      - name: Install XeTeX and MetaPost
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends texlive-xetex texlive-metapost
       - uses: gap-actions/build-pkg-docs@v2
         with:
           use-latex: true

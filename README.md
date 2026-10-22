@@ -70,10 +70,9 @@ last and create a `Makefile`. Now simply call
 
 to compile the binary and to install it in the appropriate place.
 
-Note that the current version of the configuration process only  sets  up
-directory paths. If you need a different compiler or  different  compiler
-options, you need to  edit  `src/Makefile`  prior  to  calling  `make`
-yourself.
+Compiler settings can be supplied to make, for example
+`make CC=clang CFLAGS=-g`. The default ACE memory model is B8S4C4
+(32-bit entries) with CLK64; it can be changed via `FLAGS` in `src/make.linux`.
 
 If you use this installation of GAP on different hardware  platforms  you
 will have to compile the binary for each  platform  separately.  This  is
@@ -89,17 +88,20 @@ That's it. Now start GAP and type
 
 The ACE banner should appear on the screen.
 
-For details on how to use the ACE package see the  package  documentation
-in the  `doc`  subdirectory  (view  either  `manual.dvi`  via  `xdvi`  or
-`manual.ps` via `ghostview` or `manual.pdf`  via  a  PDF  viewer),  which
-gives information on how to use ACE from within GAP. The ACE user  manual
-(`ace3001.ps` for old ACE 3  or for the more recent one `ace4.pdf`,
-used in the current package version)  in  the  `standalone-doc`   directory,
-explains how to use the ACE binary (i.e. the C program that is interfaced
-with by the package from within GAP) as a stand-alone.
+The GAP manual is `doc/manual.pdf`. Run `make doc` in a GAP package layout
+to build it together with `doc/ace41.pdf`, the standalone ACE 4.1 manual.
+`make otherdoc` builds `standalone-doc/ace41.pdf` alone. Both builds require
+XeTeX; the standalone manual also requires MetaPost. CI uses the upstream
+GAP documentation action and installs these extra TeX packages separately.
 
-The `src` subdirectory contains a copy of the C source code for ACE.
-The only modifications made were for `make.linux`.
+The `src` directory contains Havas and Ramsay's ACE 4.1 engine, imported
+from the source snapshot in PR #36 at commit
+`02798350946a07642c2c542afdd409ddbea821b6`. The original archive is linked
+above; the import and later build/interface changes are separate commits.
+The local `make.linux` changes select the default memory model and honour
+compiler and linker flags. GAP's ABI and ACE's entry width are independent.
+See `CHANGES.md` for intentional compatibility changes and `tst/README.txt`
+for the regression tests and external timeout runner.
 
 If you encounter problems with the ACE binary, please contact one of  the
 C code authors:  George  Havas  <georgehavas@gmail.com>  or  Colin  Ramsay

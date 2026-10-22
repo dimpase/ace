@@ -1,7 +1,4 @@
-
-# Makefile for ACE 4.1xx doco, Colin Ramsay, 24 Sep 03, 25 Apr 14
-# adapted by Dima Pasechnik to use xelatex 20 Mar 23
-
+# ACE 4.1 manual by Colin Ramsay; XeTeX/MetaPost build integration.
 textargets := $(wildcard *.tex)
 
 all: guide
@@ -9,20 +6,16 @@ all: guide
 styles: styles.mp
 	mpost styles
 
-bib: guide_one
+# Initial passes necessarily have unresolved citations. Retain their logs,
+# show them on failure, and expose final-pass warnings to the GAP docs action.
+guide: styles $(textargets) biblio.bib
+	xelatex -interaction=nonstopmode -halt-on-error ace41 > ace41-pass1.log 2>&1 || { cat ace41-pass1.log; exit 1; }
 	bibtex ace41
-
-guide_one: styles $(textargets)
-	xelatex ace41
-
-guide: guide_one bib
-	bibtex ace41
-	xelatex ace41
-	xelatex ace41
+	xelatex -interaction=nonstopmode -halt-on-error ace41 > ace41-pass2.log 2>&1 || { cat ace41-pass2.log; exit 1; }
+	xelatex -interaction=nonstopmode -halt-on-error ace41
 
 clean:
 	rm -f *.aux *.bbl *.blg *.dvi *.lof *.log *.lot *.pdf *.ps *.toc *.mpx
-	rm -f styles*.eps
-	rm -f *~
+	rm -f styles*.eps *~
 
-
+.PHONY: all styles guide clean

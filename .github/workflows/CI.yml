@@ -28,6 +28,11 @@ jobs:
           - 'devel'   # current GAP development version from git
           - 'latest'  # latest GAP release
           - 'minimal' # oldest GAP release supported by this package
+          - '4.10'
+          - '4.11'
+          - '4.12'
+          - '4.13'
+          - '4.14'
 
     steps:
       - uses: actions/checkout@v7
@@ -48,3 +53,34 @@ jobs:
       - uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  # setup-gap v3 explicitly removed 32-bit and HPC-GAP support. Keep the
+  # previous ABI coverage on a stable series supporting both.
+  legacy-abi:
+    name: GAP 4.14 ABI ${{ matrix.ABI }} HPC ${{ matrix.HPCGAP }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ABI: '32'
+            HPCGAP: 'no'
+          - ABI: ''
+            HPCGAP: 'yes'
+    steps:
+      - uses: actions/checkout@v7
+      - uses: gap-actions/setup-gap@v2
+        with:
+          GAPBRANCH: stable-4.14
+          ABI: ${{ matrix.ABI }}
+          HPCGAP: ${{ matrix.HPCGAP }}
+      - uses: gap-actions/build-pkg@v3
+      - uses: gap-actions/run-pkg-tests@v4
+        with:
+          coverage: 'false'
+          pre-gap: python3 tst/timeout.py 180
+      - uses: gap-actions/run-pkg-tests@v4
+        with:
+          coverage: 'false'
+          mode: onlyneeded
+          pre-gap: python3 tst/timeout.py 180

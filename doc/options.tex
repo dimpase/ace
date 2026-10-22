@@ -30,14 +30,14 @@ Section~"Loading the ACE Package"), by typing
 gap> RecNames(KnownACEOptions);
 [ "default", "help", "check", "generators", "start", "path", "cycles", 
   "normal", "ds", "group", "subgroup", "relators", "order", "max", "rep", 
-  "system", "silent", "time", "begin", "text", "options", "fill", 
+  "system", "silent", "begin", "text", "options", "fill",
   "aceinfile", "aceignore", "aceignoreunknown", "acenowarnings", "aceecho", 
   "aceincomment", "aceexampleoptions", "lenlex", "semilenlex", "incomplete", 
   "sg", "rl", "aep", "asis", "bye", "exit", "qui", 
   "cc", "cfactor", "ct", "redo", "compaction", "continu", "dmode", "dsize", 
   "dr", "easy", "echo", "enumeration", "felsch", "ffactor", "hard", 
   "hlt", "lookahead", "loop", "mendelsohn", "messages", "monitor",
-  "mode", "nc", "no", "oo", "psize", "sr", "print", "purec", 
+  "mode", "nc", "no", "oo", "pdefinitions", "psize", "sr", "print", "purec",
   "purer", "rc", "recover", "contiguous", "rfactor", "rt", "row", "sc", 
   "stabilising", "sims", "standard", "style", "tw",
   "trace", "workspace" ]
@@ -67,6 +67,13 @@ gap> ?>
 \endtt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ACE 4.1 no longer accepts `time', `ai', `ao', `aceoutfile', `hole',
+`pmode', `dump', `statistics' or `stats'. These options raise an error,
+including when warnings or unknown options are suppressed. Use an external
+process deadline for time limits, and shell redirection for standalone
+input and output. `aceinfile' still generates standalone input; it is
+handled entirely by GAP. The GAP function `ACEStats' remains available.
+
 \Section{Passing ACE Options}
 
 Options are passed to the {\ACE} interface functions in either of the
@@ -225,7 +232,7 @@ mentioned above, the later one prevails.
 \Section{Interpretation of ACE Options}
 
 Options may be given a value by an assignment to  the  name  (such  as
-`time := <val>'); or be passed without assigning  a  value,  in  which
+`max := <val>'); or be passed without assigning  a  value,  in  which
 case {\GAP} treats the option as *boolean* and sets the option to  the
 value `true', which  is  then  interpreted  by  the  {\ACE}  interface
 functions. Technically speaking the {\ACE} binary itself does not have
@@ -757,7 +764,7 @@ Options'' may be obtained by
 \beginexample
 gap> Concatenation( List(RecNames(ACEParameterOptions),
 >                        optname -> ACEOptionData(optname).synonyms) );
-[ "path", "subgroup", "max", "time", "fill", "ffactor", "asis", "ct", 
+[ "path", "subgroup", "max", "fill", "ffactor", "asis", "ct",
   "cfactor", "compaction", "dmode", "dsize", "enumeration",
   "lookahead", "loop", "mendelsohn", "messages", "monitor", "no",
   "psize", "rt", "rfactor", "row", "workspace" ]
@@ -901,6 +908,14 @@ the {\ACE} binary, `fi' is an allowed abbreviation of `fill'. However,
 `fi' is a {\GAP} keyword and so the shortest  abbreviation  of  `fill'
 allowed by the interface functions is `fil'.
 
+\>`pdefinitions:=<val>'{option pdefinitions}@{option `pdefinitions'}&
+Enable or disable preferred definitions; <val> is `true', `false', 1 or 0.
+The shortest abbreviation is `pd'. This Boolean replaces the old `pmode'
+control, whose four values have no exact correspondence in ACE 4.1.
+It defaults to true for `default', `hard' and `felsch := 1', and false
+for the other predefined strategies. The shipped examples that formerly
+selected `pmod := 2' now explicitly enable preferred definitions.
+
 \>`psize:=<val>'{option psize}@{option `psize'}&
 Size of preferred definition queue; `<val>' *must* be 0 or $2^n$,  for
 some integer $n>0$. (Shortest abbreviation: `psiz'.)
@@ -934,7 +949,7 @@ enumerations to overflow.
 \>`lookahead:=<val>'{option lookahead}@{option `lookahead'}&
 Lookahead; `<val>' should be in the integer range 0 to 4.
 (Shortest abbreviation: `look'.)
-  
+
 Although HLT style strategies are fast, they are local, in  the  sense
 that  the  implications  of  any  definitions/deductions  made   while
 applying coset numbers may not become apparent until much  later.  One
@@ -1052,36 +1067,12 @@ workspace  of  $2\times10^6$  words.  Actually,  if   the   value   of
 `workspace' is entered as a string, each of `k', `M' or  `G'  will  be
 accepted in either upper or lower case. (Shortest abbreviation: `wo'.)
 
-By default, {\ACE} has a physical table size of $10^8$ words (i.e., $4
-\times 10^8$ bytes in the  default 32-bit environment).  The number of
+By default, ACE 4.1 allocates $10^6$ entries (4 MB with the default
+32-bit entry model). The GAP ABI does not determine the ACE entry width.  The number of
 coset numbers in the table is  the table size divided by the number of
 columns.   Although  the  number   of  coset  numbers  is  limited  to
 $2^{31}-1$ (if the C `int' type is 32 bits), the table size can exceed
 the $4$GByte 32-bit limit if a suitable machine is used.
-
-\>`time:=<val>'{option time}@{option `time'}&
-Maximum execution time in seconds; `<val>' must be an integer  greater
-than or equal to $-1$. (Shortest abbreviation: `ti'.)
-
-The `time' command  puts a time limit (in seconds) on  the length of a
-run. The default is $-1$  which is no  time limit. If the  argument is
-$\ge0$ then the total elapsed time for this call is checked at the end
-of each pass through the enumerator's main loop, and if it's more than
-the limit the run is stopped and the current table returned.
-
-Note that a limit of $0$ performs exactly one pass  through  the  main
-loop, since $0 \ge 0$.
-
-The time  limit is approximate, in  the sense that  the enumerator may
-run for a longer, but never a shorter, time.  So, if there is, e.g., a
-big collapse (so that the time round the loop becomes very long), then
-the run may run over the limit by a large amount.
-
-*Notes:*
-The time limit is CPU-time, not wall-time.  As  in  all  timing  under
-UNIX, the clock's granularity  (usually  $10$  milliseconds)  and  the
-system load can  affect  the  timing;  so  the  number  of  main  loop
-iterations in a given time may vary.
 
 \>`loop:=<val>'{option loop}@{option `loop'}&
 Loop limit; `<val>' should be a non-negative integer.

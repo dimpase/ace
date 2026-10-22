@@ -539,22 +539,17 @@ inclusion step of the `start' option is omitted.)
 \>`print'{option print}@{option `print'}
 \>`print:=<val>'{option print}@{option `print'}
 \>`print:=[<val>]'{option print}@{option `print'}
-\>`print:=[<val>, <last>]'{option print}@{option `print'}
-\>`print:=[<val>, <last>, <by>]'{option print}@{option `print'}&
-Compact and print the coset table;  <val>  must  be  an  integer,  and
-<last> and <by> must be positive integers.
-(Shortest abbreviation: `pr'.)
+\>`print:=[<val>, <last>]'{option print}@{option `print'}&
+Print the current coset table (shortest abbreviation: `pr'). Both values
+are integers. With no arguments the whole table is printed; one argument
+selects rows 1 through its absolute value; two arguments select the range
+between their absolute values. A negative first argument includes orders
+and representatives. A negative second argument also includes dead cosets
+(coincidences). Endpoints are clipped to the table's range.
 
-In the first (no value) form, `print' prints the entire  coset  table,
-without orders or coset  representatives.  In  the  second  and  third
-forms, the absolute value of <val> is taken to be the last line of the
-table to be printed (and 1 is taken to be the first);  in  the  fourth
-and fifth forms, `|<val>|' is taken to be the first line of the  table
-to be printed, and <last> is taken to be the number of the  last  line
-to be printed. In the last  form,  the  table  is  printed  from  line
-`|<val>|' to line <last> in steps of <by>. If <val> is negative,  then
-the  orders   modulo   the   subgroup   (if   available)   and   coset
-representatives are printed also.
+ACE 4.1 does not compact or standardise as a side effect of `print'.
+Use `recover' or `standard' explicitly when needed. The old third (step)
+argument is rejected by the GAP interface.
 
 *INTERACTIVELY*,              use               `ACEDisplayCosetTable'
 (see~"ACEDisplayCosetTable").
