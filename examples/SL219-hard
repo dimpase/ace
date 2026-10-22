@@ -13,4 +13,4 @@ return ACEfunc(
     # Options that don't affect the enumeration
     : echo, enum := "SL(2,19)", subg := "H (index 180)", 
     # Other options
-    mess := 50000, hard, mend, pmod := 2);
+    mess := 50000, hard, mend, pdefinitions := true);

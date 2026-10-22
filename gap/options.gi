@@ -70,7 +70,6 @@ InstallValue(KnownACEOptions, rec(
   sg := [2, IS_ACE_STRINGS],
   rl := [2, IS_ACE_STRINGS],
   aep  := [3, [1..7]],
-  ai := [2, IsString],
   asis := [2, [0,1]],
   begin := [3, [""]],         # "begin" and "start" are synomyms
   start := [5, [""]],         # ... "end" synonym omitted (it is a GAP keyword)
@@ -127,12 +126,13 @@ InstallValue(KnownACEOptions, rec(
   oo   := [2, IsInt],       # "oo" and "order" are synonyms
   order := [5, IsInt],
   path := [4, [0,1]],
+  pdefinitions := [2, [0,1]],
   psize := [4, x -> x = 0 or 
                     (IsInt(x) and IsEvenInt(x) and IsPrimePowerInt(x))],
   sr := [2, ["",0,1,2,3,4,5]],
   print := [2, x -> x = "" or IsInt(x) or
-                    (IsList(x) and Length(x) <= 3 and IsInt(x[1]) and
-                     ForAll(x{[2..Length(x)]}, IsPosInt)) ],
+                    (IsList(x) and not IsString(x) and
+                     Length(x) in [1,2] and ForAll(x, IsInt)) ],
   purec := [5, [""]],       # the ACE option is "pure c"
   purer := [5, [""]],       # the ACE option is "pure r"
   rc   := [2, x -> x = "" or IsInt(x) or 
@@ -155,7 +155,6 @@ InstallValue(KnownACEOptions, rec(
   subgroup := [4, IsString],
   system := [3, IsString],
   text := [4, IsString],
-  time := [2, x -> IsInt(x) and x >= -1],
   tw   := [2, x -> IsList(x) and Length(x) = 2 and 
                    IsInt(x[1]) and IsWord(x[2])],
   trace := [2, x -> IsList(x) and Length(x) = 2 and 
@@ -196,7 +195,7 @@ InstallValue(ACEOptionSynonyms, rec(
 ##
 
 InstallValue(NonACEbinOptions,
-  [ "aceignore",    "aceignoreunknown",
+  [ "aceinfile", "aceignore", "aceignoreunknown",
     "acenowarnings", "aceecho",    "aceincomment", "aceexampleoptions",
     "echo",          "silent",     "lenlex",       "semilenlex",
     "incomplete" ]
@@ -260,6 +259,9 @@ InstallValue(ACEParameterOptions, rec(
               purec := 0,    purer := 0, sims1 := 0,   sims3 := 0,
               sims5 := 0,    sims7 := 0, sims9 := 0),
   path := rec(default := 0),
+  pdefinitions := rec(default := 1, easy := 0, felsch0 := 0, hlt := 0,
+                       purec := 0, purer := 0, sims1 := 0, sims3 := 0,
+                       sims5 := 0, sims7 := 0, sims9 := 0),
   psize := rec(default := 256),
   # `rt' is synonymous with `rfactor' but here we list just once.
   rt   := rec(default := 0,   easy := 1000,  hard := 1, 
@@ -268,7 +270,6 @@ InstallValue(ACEParameterOptions, rec(
   row  := rec(default := 1, felsch0 := 0, felsch1 := 0, 
               purec := 0,   purer := 0,   sims9 := 0),
   subgroup := "H",
-  time := -1,
   workspace := 1000000
 ));
 
@@ -294,6 +295,9 @@ InstallValue(ACEStrategyOptions,
 InstallValue(ACE_OPT_TRANSLATIONS, rec(
   purec := "pure c", # These first two haven't been called NonACEbinOptions
   purer := "pure r", 
+  hard := "hard", # ACE 4.1 no longer accepts ha/har directly
+  rep := "rep",   # preserve the old re abbreviation
+  trace := "tw", # preserve the old tr/tra/trac abbreviations
   aceecho := "echo", 
   aceincomment := "#"
 ));
@@ -347,8 +351,8 @@ InstallValue(ACE_OPT_SENTINELS, rec(
   mode := line -> IsMatchingSublist(line, "start ="),
   nc   := fail,
   order := fail,
-  options := line -> IsMatchingSublist(line, "  ---"),
-  sr    := line -> IsMatchingSublist(line, "  #----"),
+  options := fail, # compilation details have no closing separator
+  sr    := fail, # sr:2..5 have no closing separator; use a text sentinel
   print := fail,
   rc   := line -> Length(line) > 12 and
                   line{[1..13]} in ["* No success;", "* An appropri",
@@ -444,14 +448,39 @@ end);
 ##  . . . . . . . . . . . . . if acenowarnings is not an option it also warns
 ##  . . . . . . . . . . . . . . . . . . . . . . . .  about deprecated options
 ##
+InstallGlobalFunction(ACE_CHECK_OPTIONS, function(options)
+local name, lower, removed, opt, value;
+  # Check before opening a process or updating a session's stored options.
+  # Removed commands must not vanish via aceignoreunknown.
+  removed := [["time",2], ["ai",2], ["ao",2], ["aceoutfile",4],
+              ["dump",1], ["hole",2], ["pmode",4], ["statistics",4],
+              ["stats",5], ["parameters",3], ["restart",7], ["messfile",8]];
+  for name in RecNames(options) do
+    lower := LowercaseString(name);
+    if ForAny(removed, pair -> Length(lower) >= pair[2] and
+              IsMatchingSublist(pair[1], lower)) then
+      Error("ACE 4.1 no longer supports option `", name, "'\n");
+    fi;
+    opt := ACEOptionData(name);
+    value := options.(name);
+    if opt.fullname = "print" and value <> true and
+       not KnownACEOptions.print[2](value) then
+      Error("ACE 4.1 print expects at most two integers\n");
+    elif opt.fullname = "pdefinitions" and not value in [true,false,0,1] then
+      Error("ACE 4.1 pdefinitions expects a Boolean or 0/1\n");
+    fi;
+  od;
+end);
+
 InstallGlobalFunction(ACE_OPT_NAMES, function()
 local optnames;
+  ACE_CHECK_OPTIONS(ACE_OPTIONS());
   optnames := RecNames(ACE_OPTIONS());
   if not VALUE_ACE_OPTION(optnames, false, "acenowarnings") then
     if "messfile" in optnames then
       Info(InfoACE + InfoWarning, 1,
            "ACE Warning: ", 
-           "Option `messfile' deprecated: use `ACEoutfile' instead");
+           "Option `messfile' removed: redirect standalone stdout instead");
     elif "outfile" in optnames then
       Info(InfoACE + InfoWarning, 1,
            "ACE Warning: ", 

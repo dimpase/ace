@@ -100,3 +100,7 @@ DeclareGlobalFunction("ACERandomlyApplyCosetCoincidence");
 DeclareGlobalFunction("ACEConjugatesForSubgroupNormalClosure");
 
 #E  interact.gd . . . . . . . . . . . . . . . . . . . . . . . . .  ends here 
+
+DeclareGlobalFunction("ACEBinaryVersion");
+DeclareGlobalFunction("ACEDumpVariables");
+DeclareGlobalFunction("ACEDumpStatistics");

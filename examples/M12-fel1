@@ -14,4 +14,4 @@ return ACEfunc(
     : echo, enum := "M_12", subg := "Id", 
     # Other options
     mess := 25000, felsch := 1, wo := "1250k",
-    pmod := 2,     fill := 4,   dsiz := 2000);
+    pdefinitions := true,     fill := 4,   dsiz := 2000);

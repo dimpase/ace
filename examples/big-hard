@@ -16,5 +16,5 @@ return ACEfunc(
     # Options that don't affect the enumeration
     : echo, enum := "G (order 2^18.3)", subg := "H (index 6)", 
     # Other options
-    hard, mend, ct := 2000, no := 11, pmod := 2, fill := 2, 
+    hard, mend, ct := 2000, no := 11, pdefinitions := true, fill := 2, 
     dsiz := 15000, mess := 100000, wo := "2500k");

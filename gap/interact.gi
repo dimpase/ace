@@ -1233,6 +1233,7 @@ end);
 ##
 InstallGlobalFunction(INTERACT_SET_ACE_OPTIONS, function(ACEfname, datarec)
 local newoptnames, s, optnames, echo, ignored;
+  ACE_CHECK_OPTIONS(ACE_OPTIONS());
   datarec.modereqd := false;
   if not(IsEmpty(OptionsStack) or
          ForAll(RecNames(OptionsStack[ Length(OptionsStack) ]),
@@ -1568,7 +1569,7 @@ local ioIndex, datarec, line, fieldsAndValues, parameters, sgens, i, opt, val;
           "", " :;" 
           );
   FLUSH_ACE_STREAM_UNTIL(datarec.stream, 3, 3, ACE_READ_NEXT_LINE,
-                         line -> IsMatchingSublist(line, "  #---"));
+                         line -> IsMatchingSublist(line, "  ---"));
   i := 1;
   while i < Length(fieldsAndValues) do
     val := Int(fieldsAndValues[i + 1]);
@@ -1746,13 +1747,13 @@ InstallGlobalFunction(ACEDisplayCosetTable, function(arg)
 local ioIndexAndValue, stream, closeline;
   ioIndexAndValue := ACE_IOINDEX_AND_LIST(arg);
   stream := ACEData.io[ ioIndexAndValue[1] ].stream;
+  if not KnownACEOptions.print[2](ioIndexAndValue[2]) then
+    Error("ACE 4.1 print expects at most two integers\n");
+  fi;
   PROCESS_ACE_OPTION(stream, "print", ioIndexAndValue[2]);
   closeline := "------------------------------------------------------------";
   PROCESS_ACE_OPTION(stream, "text", closeline);
-  FLUSH_ACE_STREAM_UNTIL(stream, 3, 3, ACE_READ_NEXT_LINE, 
-                         line -> IsMatchingSublist(line, "CO:") or
-                                 IsMatchingSublist(line, "co:") or
-                                 IsMatchingSublist(line, "** ERROR"));
+  # ACE 4.1 print does not compact or emit a CO/co result line.
   FLUSH_ACE_STREAM_UNTIL(stream, 1, 3, ACE_READ_NEXT_LINE, 
                          line -> IsMatchingSublist(line, closeline));
 end);
@@ -1821,6 +1822,8 @@ local ioIndex, datarec, line, activecosets, cosetreps;
     Error("ACECosetRepresentatives: no current table?\n");
   fi;
   READ_ACE_ERRORS(datarec); # purge any output not yet collected
+  # Print no longer compacts the table or emits the CO/co status line.
+  PROCESS_ACE_OPTION(datarec.stream, "recover", "");
   PROCESS_ACE_OPTION(datarec.stream, "print", -datarec.stats.activecosets);
   line := FLUSH_ACE_STREAM_UNTIL(datarec.stream, 3, 3, ACE_READ_NEXT_LINE, 
                                  line -> Length(line) > 1 and
@@ -2731,3 +2734,18 @@ local ACEfname, ioIndex, add, lines, line, datarec;
 end);
 
 #E  interact.gi . . . . . . . . . . . . . . . . . . . . . . . . .  ends here 
+
+InstallGlobalFunction(ACEBinaryVersion, function(arg)
+  ACE_IOINDEX_ARG_CHK(arg);
+  # ace.gi parses the banner from a separate short-lived process at load time.
+  # Leave the active session and its pending output untouched.
+  return ACEData.version;
+end);
+
+InstallGlobalFunction(ACEDumpVariables, function(arg)
+  Error("ACEDumpVariables is unavailable with ACE 4.1; use ACEParameters\n");
+end);
+
+InstallGlobalFunction(ACEDumpStatistics, function(arg)
+  Error("ACEDumpStatistics is unavailable with ACE 4.1; use ACEStats\n");
+end);

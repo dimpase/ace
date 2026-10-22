@@ -109,3 +109,5 @@ DeclareGlobalFunction("NEW_ACE_OPTIONS");
 DeclareSynonym("FlushOptionsStack", ResetOptionsStack);
 
 #E  options.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
+
+DeclareGlobalFunction("ACE_CHECK_OPTIONS");
