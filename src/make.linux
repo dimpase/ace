@@ -34,7 +34,7 @@ SRC0A = enum00.inc enum01.inc enum02.inc
 # ACE executable.
 
 ace: al2.h $(SRC2) al1.h $(SRC1) al0.h $(SRC0) $(SRC0A)
-	$(CC) $(FLAGS) -o ace $(SRC2) $(SRC1) $(SRC0)
+	$(CC) $(FLAGS) $(CFLAGS) -o ace $(SRC2) $(SRC1) $(SRC0) $(LDFLAGS)
 
 # ACE dependent test/example programmes.
 
